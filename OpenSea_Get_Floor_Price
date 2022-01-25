@@ -1,0 +1,30 @@
+def get_floor(projects):
+    import requests
+    import json
+    try:
+        if type(projects) == list:
+            for project in projects:
+                url = ''.join(['https://','api.opensea.io/','api/','v1/','collection/',project,'/stats'])
+
+                ### getting information
+                headers = {'Accept':'application/json'}
+                response = requests.request("GET", url, headers = headers)
+
+                ### converting received data to dictionary - pulling information
+                d= json.loads(response.text)
+                fp = d['stats']['floor_price']
+                print(project,'Floor Price',fp)
+        else:
+            print("Sorry, enter a list!")
+    except:
+        print("Sorry, something went wrong")
+
+### Enter a list of projects you're interested in.
+### if a link to the collection is https://opensea.io/collection/azuki 
+### the entered name is 'azuki'
+
+### enter project names
+projects = ['azuki','hustlersofwallst','hapeprime','boredapeyachtclub','metroverse','cryptopunks','xrc','cryptobatz-by-ozzy-osbourne','mutant-ape-yacht-club','lil-heroes-by-edgar-plans']
+
+### trigger function
+get_floor(projects)
